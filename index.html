@@ -105,11 +105,11 @@
       const updateCounter = () => {
         const target = +counter.getAttribute('data-target');
         const current = +counter.innerText.replace("+", "");
-        const increment = Math.ceil(target / 100);
+        const increment = Math.ceil(target / 200);
         if (current < target) {
           const newValue = Math.min(current + increment, target);
           counter.innerText = newValue + "+";
-          setTimeout(updateCounter, 20);
+          setTimeout(updateCounter, 30);
         }
       };
       updateCounter();
