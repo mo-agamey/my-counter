@@ -110,36 +110,49 @@
   </div>
 
   <!-- أصوات مختلفة للعداد والنهاية -->
-  <audio id="countingSound" src="https://www.soundjay.com/button/beep-08b.wav"></audio>
-  <audio id="completeSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+  <audio id="countingSound" src="https://www.soundjay.com/button/beep-08b.wav" preload="auto"></audio>
+  <audio id="completeSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
 
   <script>
     const counters = document.querySelectorAll('.number');
-    counters.forEach((counter, index) => {
+
+    // دالة لتشغيل الصوت
+    const playSound = (id) => {
+      const sound = document.getElementById(id);
+      sound.currentTime = 0; // إعادة الصوت للبداية
+      sound.play();
+    };
+
+    // تحديث العداد
+    counters.forEach((counter) => {
       counter.innerText = '0';
+
       const updateCounter = () => {
         const target = +counter.getAttribute('data-target');
         const current = +counter.innerText.replace("+", "");
         const increment = Math.ceil(target / 200);
+
         if (current < target) {
           const newValue = Math.min(current + increment, target);
           counter.innerText = newValue + "+";
+
           // تشغيل صوت العد
-          document.getElementById('countingSound').currentTime = 0;
-          document.getElementById('countingSound').play();
+          playSound('countingSound');
           setTimeout(updateCounter, 30);
         } else {
-          // تشغيل صوت النهاية (الجرس)
-          document.getElementById('completeSound').currentTime = 0;
-          document.getElementById('completeSound').play();
-          counter.classList.add('pulse');
+          // تشغيل صوت النهاية عند الوصول للعدد النهائي
+          if (!counter.classList.contains('completed')) {
+            playSound('completeSound');
+            counter.classList.add('completed', 'pulse'); // إضافة نبضة عند الوصول للعدد
 
-          // إزالة الكلاس بعد النبضة
-          setTimeout(() => {
-            counter.classList.remove('pulse');
-          }, 600);
+            // إزالة النبضة بعد الأنميشن
+            setTimeout(() => {
+              counter.classList.remove('pulse');
+            }, 600);
+          }
         }
       };
+
       updateCounter();
     });
   </script>
