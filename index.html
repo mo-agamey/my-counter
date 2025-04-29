@@ -109,10 +109,9 @@
     </div>
   </div>
 
-  <!-- أصوات مختلفة لكل عداد -->
-  <audio id="dingSound1" src="https://www.soundjay.com/button/beep-07.wav"></audio>
-  <audio id="dingSound2" src="https://www.soundjay.com/button/beep-08b.wav"></audio>
-  <audio id="dingSound3" src="https://www.soundjay.com/button/beep-09.wav"></audio>
+  <!-- أصوات مختلفة للعداد والنهاية -->
+  <audio id="countingSound" src="https://www.soundjay.com/button/beep-08b.wav"></audio>
+  <audio id="completeSound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 
   <script>
     const counters = document.querySelectorAll('.number');
@@ -125,20 +124,14 @@
         if (current < target) {
           const newValue = Math.min(current + increment, target);
           counter.innerText = newValue + "+";
+          // تشغيل صوت العد
+          document.getElementById('countingSound').currentTime = 0;
+          document.getElementById('countingSound').play();
           setTimeout(updateCounter, 30);
         } else {
-          // تشغيل الصوت عند الوصول للعدد
-          let dingSound;
-          if (index === 0) {
-            dingSound = document.getElementById('dingSound1');
-          } else if (index === 1) {
-            dingSound = document.getElementById('dingSound2');
-          } else {
-            dingSound = document.getElementById('dingSound3');
-          }
-
-          dingSound.currentTime = 0;
-          dingSound.play();
+          // تشغيل صوت النهاية (الجرس)
+          document.getElementById('completeSound').currentTime = 0;
+          document.getElementById('completeSound').play();
           counter.classList.add('pulse');
 
           // إزالة الكلاس بعد النبضة
