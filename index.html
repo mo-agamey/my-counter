@@ -13,21 +13,18 @@
 <body>
 
   <div class="counter-box">
-    <div class="number" data-target="250">0</div>
-    <div class="label">تراخيص</div>
+    <div class="number" data-target="200">0</div>
+    <div class="label">PERMIT APP.</div>
   </div>
   <div class="counter-box">
     <div class="number" data-target="300">0</div>
-    <div class="label">وركينج دروينج</div>
+    <div class="label">Shop Drawings</div>
   </div>
   <div class="counter-box">
     <div class="number" data-target="150">0</div>
-    <div class="label">انتريور</div>
+    <div class="label">Interior Modeling</div>
   </div>
-  <div class="counter-box">
-    <div class="number" data-target="60">0</div>
-    <div class="label">مواقع مشروعات</div>
-  </div>
+
 
   <script>
     const counters = document.querySelectorAll('.number');
@@ -38,7 +35,9 @@
         const current = +counter.innerText;
         const increment = Math.ceil(target / 100);
         if (current < target) {
-          counter.innerText = Math.min(current + increment, target);
+          const newValue = Math.min(current + increment, target);
+          counter.innerText = newValue + "+";
+
           setTimeout(updateCounter, 20);
         }
       };
