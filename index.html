@@ -132,13 +132,22 @@
         const current = +counter.innerText.replace("+", "");
         const increment = Math.ceil(target / 200);
 
+        // حساب delay بناءً على الحجم
+        let delay = 30; // تأخير افتراضي
+
+        if (target === 300) {
+          delay = 40; // تأخير أكبر للعداد الذي يحتوي على 300 (Shop Drawings)
+        } else if (target === 150) {
+          delay = 25; // أقل تأخير للعداد الذي يحتوي على 150 (Interior Modeling)
+        }
+
         if (current < target) {
           const newValue = Math.min(current + increment, target);
           counter.innerText = newValue + "+";
 
           // تشغيل صوت العد
           playSound('countingSound');
-          setTimeout(updateCounter, 30);
+          setTimeout(updateCounter, delay);
         } else {
           // تشغيل صوت النهاية عند الوصول للعدد النهائي
           if (!counter.classList.contains('completed')) {
